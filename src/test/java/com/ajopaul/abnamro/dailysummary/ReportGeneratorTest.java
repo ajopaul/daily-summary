@@ -8,12 +8,12 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ReportGeneratorTest {
+public class ReportGeneratorTest {
 
     private List<InputRecord> inputRecordList;
 
     @BeforeEach
-    void setup() {
+    public void setup() {
         inputRecordList = asList(InputRecord.builder()
                         .clientType("111")
                         .clientNumber("1111")
@@ -101,8 +101,8 @@ class ReportGeneratorTest {
     }
 
     @Test
-    void testReportSummary() {
-
+    public void testReportSummary() {
+        System.out.println(inputRecordList);
         List<ReportSummary> reportSummaryList = ReportGenerator.report(inputRecordList);
 
         assertThat(reportSummaryList).isEqualTo(asList(

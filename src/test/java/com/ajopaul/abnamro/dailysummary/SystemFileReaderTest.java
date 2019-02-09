@@ -13,10 +13,10 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-class SystemFileReaderTest {
+public class SystemFileReaderTest {
 
     @Test
-    void testInputRecordList() throws IOException {
+    public void testInputRecordList() throws IOException {
 
         Path path = Files.createTempFile("sample-input-file", ".txt");
         File file = path.toFile();
@@ -57,7 +57,7 @@ class SystemFileReaderTest {
     }
 
     @Test
-    void testInputRecordList_whenNumericValuesAreInvalid() throws IOException {
+    public void testInputRecordList_whenNumericValuesAreInvalid() throws IOException {
         Path path = Files.createTempFile("sample-input-file", ".txt");
         File file = path.toFile();
         String inputs = "XXX1111111110100101XXXXXXAAAAAAAAAAAA20000101XXXXXXX000000000XX0000000009XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" +
@@ -98,7 +98,7 @@ class SystemFileReaderTest {
     }
 
     @Test
-    void testInputRecordList_whenSomeValuesAreInvalid() throws IOException {
+    public void testInputRecordList_whenSomeValuesAreInvalid() throws IOException {
         Path path = Files.createTempFile("sample-input-file", ".txt");
         File file = path.toFile();
         String inputs = "xxxxxx" +
