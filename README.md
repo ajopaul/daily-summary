@@ -1,5 +1,9 @@
 # daily-summary
 
+Assumptions:
+  1. Definition of client is combination of 'CLIENT TYPE, CLIENT NUMBER, ACCOUNT NUMBER, SUBACCOUNT NUMBER'
+  2. Definition of product is combination of 'EXCHANGE CODE, PRODUCT GROUP CODE, SYMBOL, EXPIRATION DATE'
+
 How to Run:
 
   1. Checkout source onto a *nix machine with Java8 and mvn 3.x
