@@ -48,6 +48,22 @@ public class ReportGenerator {
         return reportSummaryList;
     }
 
+    public boolean exportToCSV() {
+        boolean success = false;
+        try (
+                Writer writer = Files.newBufferedWriter(Paths.get(csvOutFilePath))
+        ) {
+            StatefulBeanToCsv<ReportSummary> beanToCsv = new StatefulBeanToCsvBuilder(writer)
+                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                    .build();
+
+            beanToCsv.write(getReportSummary());
+            success = true;
+        } finally {
+            return success;
+        }
+    }
+
     private static String extractClientInformation(InputRecord record) {
         return record.getClientType() +
                 record.getClientNumber() +
@@ -64,21 +80,5 @@ public class ReportGenerator {
 
     private static Double extractTotalTransaction(InputRecord inputRecord) {
         return inputRecord.getQuantityLong() - inputRecord.getQuantityShort();
-    }
-
-    public boolean exportToCSV() {
-        boolean success = false;
-        try (
-                Writer writer = Files.newBufferedWriter(Paths.get(csvOutFilePath))
-        ) {
-            StatefulBeanToCsv<ReportSummary> beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
-                    .build();
-
-            beanToCsv.write(getReportSummary());
-            success = true;
-        } finally {
-            return success;
-        }
     }
 }
