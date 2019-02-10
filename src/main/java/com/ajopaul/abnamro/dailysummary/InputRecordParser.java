@@ -1,20 +1,22 @@
 package com.ajopaul.abnamro.dailysummary;
 
+import com.ajopaul.abnamro.dailysummary.model.InputRecord;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SystemFileReader {
+public class InputRecordParser {
 
     public static final String EMPTY = "";
     public static final double ZERO = 0.0;
 
-    public static List<InputRecord> parse(String inputFilePath) throws IOException {
+    public List<InputRecord> parseInputFile(String inputFilePath) throws IOException {
         return Files.readAllLines(Paths.get(inputFilePath))
                 .stream()
-                .map(SystemFileReader::buildInputRecord)
+                .map(InputRecordParser::buildInputRecord)
                 .collect(Collectors.toList());
 
     }
@@ -49,5 +51,4 @@ public class SystemFileReader {
             return ZERO;
         }
     }
-
 }

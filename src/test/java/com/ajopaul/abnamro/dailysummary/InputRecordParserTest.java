@@ -1,5 +1,7 @@
 package com.ajopaul.abnamro.dailysummary;
 
+import com.ajopaul.abnamro.dailysummary.model.InputRecord;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -12,8 +14,13 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+class InputRecordParserTest {
 
-public class SystemFileReaderTest {
+    InputRecordParser inputRecordParser;
+    @BeforeEach
+    public void setup() {
+        inputRecordParser = new InputRecordParser();
+    }
 
     @Test
     public void testParse_InputRecordList() throws IOException {
@@ -26,7 +33,7 @@ public class SystemFileReaderTest {
         Files.write(path, inputs.getBytes());
         file.deleteOnExit();
         String inputFilePath =  file.getAbsolutePath();
-        List<InputRecord> inputRecordList = SystemFileReader.parse(inputFilePath);
+        List<InputRecord> inputRecordList = inputRecordParser.parseInputFile(inputFilePath);
 
         assertThat(inputRecordList).isEqualTo(asList(InputRecord.builder()
                         .clientType("1111")
@@ -67,7 +74,7 @@ public class SystemFileReaderTest {
         file.deleteOnExit();
         String inputFilePath = file.getAbsolutePath();
 
-        List<InputRecord> inputRecordList = SystemFileReader.parse(inputFilePath);
+        List<InputRecord> inputRecordList = inputRecordParser.parseInputFile(inputFilePath);
 
         assertThat(inputRecordList).isEqualTo(asList(InputRecord.builder()
                         .clientType("1111")
@@ -106,7 +113,7 @@ public class SystemFileReaderTest {
         file.deleteOnExit();
         String inputFilePath =  file.getAbsolutePath();
 
-        List<InputRecord> inputRecordList = SystemFileReader.parse(inputFilePath);
+        List<InputRecord> inputRecordList = inputRecordParser.parseInputFile(inputFilePath);
 
         assertThat(inputRecordList).isEqualTo(singletonList(InputRecord.builder()
                 .clientType("")

@@ -1,11 +1,31 @@
 package com.ajopaul.abnamro.dailysummary;
 
+import com.ajopaul.abnamro.dailysummary.model.InputRecord;
+import com.ajopaul.abnamro.dailysummary.model.ReportSummary;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
+@Data
 public class ReportGenerator {
-    public static List<ReportSummary> report(List<InputRecord> inputRecordList) {
+
+    private final List<InputRecord> inputRecordList;
+    private final String csvOutFilePath;
+
+    public List<ReportSummary> getReportSummary() {
 
         List<ReportSummary> reportSummaryList = new ArrayList<>();
         inputRecordList.forEach(
@@ -47,5 +67,17 @@ public class ReportGenerator {
 
     private static Double extractTotalTransaction(InputRecord inputRecord) {
         return inputRecord.getQuantityLong() - inputRecord.getQuantityShort();
+    }
+
+    public void exportToCSV() throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException {
+                try (
+                        Writer writer = Files.newBufferedWriter(Paths.get(csvOutFilePath))
+        ) {
+            StatefulBeanToCsv<ReportSummary> beanToCsv = new StatefulBeanToCsvBuilder(writer)
+                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                    .build();
+
+            beanToCsv.write(getReportSummary());
+        }
     }
 }

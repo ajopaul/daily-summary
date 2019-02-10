@@ -1,4 +1,4 @@
-package com.ajopaul.abnamro.dailysummary;
+package com.ajopaul.abnamro.dailysummary.model;
 
 import lombok.Builder;
 import lombok.Value;
