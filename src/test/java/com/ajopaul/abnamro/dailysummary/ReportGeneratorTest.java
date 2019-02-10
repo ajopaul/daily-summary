@@ -102,7 +102,6 @@ public class ReportGeneratorTest {
 
     @Test
     public void testReportSummary() {
-        System.out.println(inputRecordList);
         List<ReportSummary> reportSummaryList = ReportGenerator.report(inputRecordList);
 
         assertThat(reportSummaryList).isEqualTo(asList(

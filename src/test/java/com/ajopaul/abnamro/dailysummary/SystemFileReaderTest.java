@@ -16,8 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SystemFileReaderTest {
 
     @Test
-    public void testInputRecordList() throws IOException {
-
+    public void testParse_InputRecordList() throws IOException {
         Path path = Files.createTempFile("sample-input-file", ".txt");
         File file = path.toFile();
         String inputs = "XXX1111111110100101XXXXXXAAAAAAAAAAAA20000101XXXXXXX000000000110000000009XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" +
@@ -57,7 +56,7 @@ public class SystemFileReaderTest {
     }
 
     @Test
-    public void testInputRecordList_whenNumericValuesAreInvalid() throws IOException {
+    public void testParse_InputRecordList_whenNumericValuesAreInvalid() throws IOException {
         Path path = Files.createTempFile("sample-input-file", ".txt");
         File file = path.toFile();
         String inputs = "XXX1111111110100101XXXXXXAAAAAAAAAAAA20000101XXXXXXX000000000XX0000000009XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" +
@@ -66,7 +65,7 @@ public class SystemFileReaderTest {
                 "\n";
         Files.write(path, inputs.getBytes());
         file.deleteOnExit();
-        String inputFilePath =  file.getAbsolutePath();
+        String inputFilePath = file.getAbsolutePath();
 
         List<InputRecord> inputRecordList = SystemFileReader.parse(inputFilePath);
 
@@ -98,7 +97,7 @@ public class SystemFileReaderTest {
     }
 
     @Test
-    public void testInputRecordList_whenSomeValuesAreInvalid() throws IOException {
+    public void testParse_InputRecordList_whenSomeValuesAreInvalid() throws IOException {
         Path path = Files.createTempFile("sample-input-file", ".txt");
         File file = path.toFile();
         String inputs = "xxxxxx" +
