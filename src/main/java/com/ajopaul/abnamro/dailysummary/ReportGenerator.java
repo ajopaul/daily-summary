@@ -5,12 +5,9 @@ import com.ajopaul.abnamro.dailysummary.model.ReportSummary;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -69,15 +66,19 @@ public class ReportGenerator {
         return inputRecord.getQuantityLong() - inputRecord.getQuantityShort();
     }
 
-    public void exportToCSV() throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, IOException {
-                try (
-                        Writer writer = Files.newBufferedWriter(Paths.get(csvOutFilePath))
+    public boolean exportToCSV() {
+        boolean success = false;
+        try (
+                Writer writer = Files.newBufferedWriter(Paths.get(csvOutFilePath))
         ) {
             StatefulBeanToCsv<ReportSummary> beanToCsv = new StatefulBeanToCsvBuilder(writer)
                     .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                     .build();
 
             beanToCsv.write(getReportSummary());
+            success = true;
+        } finally {
+            return success;
         }
     }
 }

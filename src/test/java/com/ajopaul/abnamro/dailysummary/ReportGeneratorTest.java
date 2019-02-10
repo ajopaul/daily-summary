@@ -18,6 +18,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReportGeneratorTest {
 
@@ -148,7 +149,9 @@ public class ReportGeneratorTest {
 
     @Test
     public void test_exportToCSV() throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-        reportGenerator.exportToCSV();
+        boolean success = reportGenerator.exportToCSV();
+
+        assertTrue(success);
 
         try (
                 Reader reader = Files.newBufferedReader(Paths.get("/tmp/Output.csv"));

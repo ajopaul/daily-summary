@@ -2,8 +2,6 @@ package com.ajopaul.abnamro.dailysummary;
 
 import com.ajopaul.abnamro.dailysummary.io.InputFileReader;
 import com.ajopaul.abnamro.dailysummary.model.InputRecord;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,14 +12,22 @@ import java.util.List;
  */
 public class App 
 {
-    public static void main( String[] args ) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+    public static void main( String[] args ) throws IOException {
         InputFileReader inputFileReader = new InputFileReader(args);
         String inputFilePath = inputFileReader.getInputFilePathFromProgramArgs();
 
         InputRecordParser inputRecordParser = new InputRecordParser();
 
         List<InputRecord> inputRecordList = inputRecordParser.parseInputFile(inputFilePath);
+
         ReportGenerator reportGenerator = new ReportGenerator(inputRecordList, "./Output.csv");
-        reportGenerator.exportToCSV();
+        boolean success = reportGenerator.exportToCSV();
+        if (success) {
+            System.out.println("\n***********************************");
+            System.out.println("CSV Generated at path: "+reportGenerator.getCsvOutFilePath());
+            System.out.println("***********************************\n");
+        } else {
+            System.out.println("\nCSV Generation failed!\n");
+        }
     }
 }
